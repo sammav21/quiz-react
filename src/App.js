@@ -1,22 +1,30 @@
 import React from 'react';
 import './App.css';
 import Start from './Start';
-import Quiz from './Quiz';
+import Question from './Question';
+import axios from 'axios';
+import {nanoid} from 'nanoid'
+
+const triviaURL = 'https://opentdb.com/api.php?amount=4&type=multiple';
+
 
 function App() {
+  
+  const [data, setData] = React.useState([])
   const [start, setStart] = React.useState(false)
-  const [data, setData] = React.useState({
-    question: "",
-    wrongAnswer: "",
-    answer: ""
-  })
 
+  function beginQuiz(){
+    setStart(true)
+  }
+  
   React.useEffect(() => {
-    fetch("https://opentdb.com/api.php?amount=4")
-        .then(res => res.json())
-        .then(data => setData(data.data))
-}, [])
-
+    getTriviaAPIData();
+  }, []);
+  
+  const getTriviaAPIData = async () => {
+    const response = await axios.get(triviaURL)
+    setData(response.data)
+  }
 
 
   const blobSize = {
@@ -24,13 +32,28 @@ function App() {
     height: start ? "142px" : "235px"
   }
 
-  function beginQuiz(){
-    setStart(true)
-  }
+
 
   function submitForm(event){
     event.preventDefault()
   }
+
+
+
+  const resultsArray = data.results?.map(results => {
+    const mixAnswers = [...results.incorrect_answers, results.correct_answer] 
+  
+    return(
+    <Question
+      key={results.question}
+      question={results.question}
+      answer={results.correct_answer}
+      wrong={results.incorrect_answers}
+      allAnswers={mixAnswers}
+    /> )}   
+    
+)
+console.log(data)
   return (
     <div className="AppContainer">
       <img className='blueblob' style={blobSize} src={require('./assets/blue-blob.png')}></img>
@@ -41,14 +64,10 @@ function App() {
       ?<Start begin={beginQuiz} />
 
       : 
-      <form>
-        <Quiz 
-        question={data.question}
-        wrongAnswer={data.wrongAnswer}
-        answer={data.answer}
-        />
+      <div className='form'>
+        {resultsArray}
         <button className="checkAnswers" onClick={submitForm} type='submit'>Check answers</button>
-      </form>
+      </div>
       
       }
     
