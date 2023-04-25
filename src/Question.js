@@ -3,8 +3,8 @@ import Choices from './Choices';
 import {nanoid} from 'nanoid'
 
 export default function Question(props){
+ 
     const [choices, setChoices] = React.useState(allChoices())
-
     //Generate copy with following values for every mutliple choice option
     function eachChoice(answer){
         return{
@@ -12,6 +12,7 @@ export default function Question(props){
             answer: answer,
             selected: false,
             correct: false,
+            clicked: false
         }
     }
 
@@ -28,14 +29,16 @@ export default function Question(props){
         )
     }
 
+
+
     function changeSelectStatus(id){
         setChoices(prevChoices => {
             return prevChoices.map((choice) => {
-                return choice.id === id ? {...choice,selected: true} : {...choice,selected: false}
+                return choice.id === id ? {...choice,selected: true, clicked: true} : {...choice,selected: false}
             })
-        })
+           
+        }) 
     }
-
 
 
 const choicesPresented = choices.map(choice => {
@@ -45,6 +48,7 @@ const choicesPresented = choices.map(choice => {
             answer={choice.answer}
             selected={choice.selected}
             correct={choice.correct}
+            clicked={choice.clicked}
             changeSelectStatus={() => changeSelectStatus(choice.id)}
             question={props.question}
             score={props.score}
