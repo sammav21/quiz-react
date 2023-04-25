@@ -14,8 +14,9 @@ function App() {
   const [data, setData] = React.useState([])
   const [start, setStart] = React.useState(false)
   const [end, setEnd] = React.useState(false)
-  const [score, setScore] = React.useState(1)
-
+  const [score, setScore] = React.useState(0)
+  const [clicked, setClicked] = React.useState(false)
+  
 
   React.useEffect(() => {
     getTriviaAPIData();
@@ -37,6 +38,8 @@ function App() {
       setScore={setScore}
       end={end}
       setEnd={setEnd}
+      clicked={clicked}
+      setClicked={setClicked}
       /*hope to add this as a check down the line */
     /> )})
   
@@ -46,7 +49,6 @@ function App() {
 
     function endGame(){
       setEnd(true)
-      
     }
 
     
@@ -60,16 +62,13 @@ const blobSize = {
       <img className='blueblob' style={blobSize} src={require('./assets/blue-blob.png')}></img>
       <img className='yellowblob' style={blobSize}src={require('./assets/yellow-blob.png')}></img>
       
-      {!start 
-
-      ?<Start begin={beginQuiz} />
-
-      : 
-      <div className='form'>
+      {start 
+      ?<div className='form'>
         {questionComponent}
         <button className="checkAnswers"  type='submit' onClick={() => endGame()}>{end ? "Play Again" : "Check Answers"}</button>
+        {end && <h3>You scored {score} out of 4</h3>}
       </div>
-      
+      : <Start begin={beginQuiz} />
       }
     
       
