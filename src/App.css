@@ -65,7 +65,7 @@ body{
     cursor: pointer;
 }
 
-.form{
+form{
     position: relative;
     margin: 37px auto 0;
     display: flex;
