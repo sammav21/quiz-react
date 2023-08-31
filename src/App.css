@@ -3,14 +3,34 @@
     padding: 0;
     margin: 0;
 }
-
-body{
-    width: 100%;
-    height: 100%;
-    background-color: #F5F7FB;
-    overflow: hidden;
+.w-100{
+    width: 100vw;
+}
+.h-100{
+    height: 100vh;
+}
+.flex{
+    display: flex;
+}
+.column{
+    flex-direction: column;
 }
 
+body{
+    background-color: #F5F7FB;
+    overflow: hidden;
+    color: #293264;
+    font-size: 1rem;
+    font-family: 'Inter';
+}
+.App{
+    justify-content: center;
+    align-items: center;
+}
+
+button:hover{
+    background-color: #4d9e65;
+}
 .blueblob{
     position: absolute;
     left: 0;
@@ -22,116 +42,131 @@ body{
     right: 0;
     top: 0;
 }
-.AppContainer{
-    width: 100%;
-    height: 100%;
-}
 
 .startPage{
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    margin: 35vh auto;
+    margin: auto;
 }
-
 
 .startTitle{
     font-family: 'Karla';
-    font-size: 31.25px;
-    line-height: 37px;
-    color: #293264;
-    
+    font-size: 3rem;
 }
+
 .startDetail{
-    font-family: 'Inter';
     font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
-    color: #293264;
     margin-top: 7px;
 }
 .startButton{
-    width: 193px;
-    height: 52px;
-    margin-top: 29px;
+    width: 10rem;
+    height: 3.5rem;
+    margin-top: 1.5rem;
     background: #4D5B9E;
     border: none;
     border-radius: 15px;
-    font-family: 'Inter';
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 19px;
     color: #F5F7FB;
     cursor: pointer;
 }
 
-.form{
+form{
     position: relative;
-    margin: 37px auto 0;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 600px
-
+    width: 75%;
+    align-items: center;
 }
+
+
 .q-a{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    align-self: flex-start;
+    width: 100%;
     border-bottom: solid 1px #DBDEF0;
-    padding-bottom: 15px; 
-    margin-top: 15px; 
+    padding: 1rem 0;  
 }
 
 .questions{
     font-family: 'Karla';
-    font-size: 1.1em;
-    line-height: 19px;
-    color: #293264;
+    font-size: 1.4em;
 }
 
 .answerContainer{
-    display: flex;
-    max-width: 600px;
-    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+    margin-top: .5rem;
 }
 
-input{
-    display: none;
-}
   .answerChoices{
-    white-space: nowrap;
-    min-width: 66px;
-    max-width: max-content;
-    height: 20.65px;
-    border: 0.794239px solid #4D5B9E;
+    width: 10rem;
+    height: 2rem;
+    border: 0.5px solid #4D5B9E;
     border-radius: 8px;
-    font-family: 'Inter';
     font-weight: 500;
-    font-size:.7em;
-    line-height: 12px;
-    color: #293264;
-    display:flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    padding: 0 19px;
-    margin-right: 12px;
-    margin-top: 15px;
+    padding: 1rem;
+    margin-right: 1rem;
   }
 
+.answerChoices:hover{
+    background-color: #DBDEF0;
+}
+.selected{
+    background-color: #DBDEF0;
+}
+.correct{
+    background-color: #4d9e65;
+    color: #F5F7FB;
+}
+.wrong{
+    background-color: #ac574f;
+    color: #F5F7FB;
+
+}
+.missed{
+    background-color: #DBDEF0;
+}
+.formBottom{
+    align-items: center;
+    margin: 1.5rem 0;
+}
 .checkAnswers{
-    width: 120px;
-    height: 35px;
-    align-self: center;
+    width: 8rem;
+    height: 2.5rem;
     background: #4D5B9E;
     border-radius: 10px;
     border: none;
-    margin-top: 20px;
-    font-family: 'Inter';
-    font-weight: 600;
-    font-size: 10.24px;
-    line-height: 12px;
+    margin-right: 1rem;
+    font-size: .75rem;
     color: #F5F7FB;
     cursor: pointer;
 }  
+
+@media screen and (max-width: 35rem){
+    form{
+        width: 90%;
+    }
+    
+    .q-a{
+        padding: .75rem 0;  
+    }
+    
+    .questions{
+        font-size: 1.2em;
+    }
+    
+    .answerContainer{
+        margin-top: .5rem;
+    }
+    
+      .answerChoices{
+        min-width: 5rem;
+        height: auto;
+        padding: .75rem;
+        margin: auto;
+      }
+
+    .formBottom{
+        align-items: center;
+        margin: 1rem 0;
+    }
+
+}
