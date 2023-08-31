@@ -1,28 +1,50 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Question } from "../Exports"
 
-export default function Quiz({data}){
+const triviaURL = 'https://opentdb.com/api.php?amount=4&type=multiple';
+export default function Quiz({start}){
 
+    const [data, setData] = useState([]);
     const [end, setEnd] = useState(false);
-    const [score, setScore] = useState(0);
-    const results = data.results;
-    const handleSubmit = () => {
+    const [totalScore, setTotalScore] = useState(0);
+
+    const getTriviaAPIData =  async () => {
+        await fetch(triviaURL)
+        .then((response) => response.json())
+        .then((json) => setData(json.results))
 
     }
+      useEffect(() => {
+        getTriviaAPIData();
+      }, [start]);
 
-    function endGame(){
+      let scoreArray = [];
+      const addPoints = (singlePoint) =>{
+        scoreArray.push(singlePoint);
+        const sum = scoreArray.reduce((total, x)=> total+x);
+        setTotalScore(sum);
+      }
+
+      function endGame(e){
+        e.preventDefault();
         setEnd(true)
       }
-  
+      function restartGame(e){
+        e.preventDefault();
+        setEnd(false);
+        getTriviaAPIData();
+      }
     return(
-        <form onSubmit={handleSubmit}>
-            {results.map((result, i) => (
-                <Question key={i} result={result} />
+        <form onSubmit={!end ? endGame : restartGame} className="flex column">
+            {data.map((questionData, i) => (
+                <Question key={i} questionData={questionData} start={start} end={end} addPoints={addPoints} />
             ))}
-        <button className="checkAnswers"  type='submit' onClick={() => endGame()}>
+          <div className="formBottom flex">
+        <button className="checkAnswers"  type='submit' >
             {end ? "Play Again" : "Check Answers"}
         </button>
-        {end && <h3>You scored {score} out of 4</h3>}
+        {end && <h3>You scored {totalScore} out of 4</h3>}
+        </div>
       </form>
     )
 }

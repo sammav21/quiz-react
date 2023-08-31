@@ -1,22 +1,31 @@
 import React from "react";
+import { Decoder } from "../Exports";
 
-
-export default function Option({answer}){
-
-    // const selectedStyle = {
-    //     backgroundColor: props.selected ? "#D6DBF5" : "transparent"
-    // }
-
-    // function tallyScore(){
-    //     props.changeSelectStatus()
-    //     if(!props.clicked && props.correct){
-    //         props.setScore(props.score+1)
-    //     }
+export default function Option({answer, correctAnswer, end, setChosenAnswer, chosenAnswer}){
+    const handleChosenAnswer = (e) => {
+        e.preventDefault();
+       setChosenAnswer(answer);
+    }
+    const styles = () => {
+        if(!end){
+            if(chosenAnswer === answer){
+                return 'selected'
+            } 
+        } else if(end){
+             if(chosenAnswer === answer && chosenAnswer === correctAnswer){
+                return 'correct'
+            } else if(chosenAnswer === answer && chosenAnswer !== correctAnswer) {
+                return 'wrong'
+            } else if (answer === correctAnswer){
+                return 'missed'
+            }
+        }
+          
         
-    // }
-
+}
+// {chosenAnswer === answer ? 'selected answerChoices flex':'answerChoices flex'}
 return(
-    <button>{answer}</button>
+    <button onClick={handleChosenAnswer} className={`answerChoices flex ${styles()}`}>{Decoder(answer)}</button>
     
 )
 }
